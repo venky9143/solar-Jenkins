@@ -1,9 +1,9 @@
 pipeline{
     agent any
     stages{
-        stage("build"){
+        stage("Tittle Of the Project "){
             steps{
-                echo "building" 
+                echo "Build the project : solar system" 
 
             }
         }
