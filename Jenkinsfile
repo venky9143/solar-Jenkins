@@ -45,18 +45,35 @@ pipeline {
             }
         }
 
-        stage("OWASP Dependency Check"){
-                    steps{
-                        catchError(buildResult: 'SUCCESS', message: 'Oops! it will be fixed in future releases', stageResult: 'UNSTABLE'){
-                         sh 'mkdir -p reports' 
-                        dependencyCheck additionalArguments: 
-                        '''--scan	--format ALL	--out reports --project	Workspace''',
-                        nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
+        stage("OWASP Dependency Check") {
+                steps {
+                    catchError(buildResult: 'SUCCESS', message: 'Oops! It will be fixed in future releases', stageResult: 'UNSTABLE') {
+                        sh 'mkdir -p reports' 
+            
+                        dependencyCheck(
+                            additionalArguments: '--scan --format ALL --out reports --project Workspace',
+                            nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true
+                        )
+            
                         echo "OWASP Dependency Check completed successfully"
-                        dependencyCheckPublisher pattern: 'reports/dependency-check-report.xml' 
-                        echo "no errors in scanning"
+                        
+                        // Debugging: List contents of reports directory
+                        sh 'ls -l reports/'
+            
+                        // Check if the report file exists before publishing
+                        script {
+                            def reportExists = sh(script: "test -s reports/dependency-check-report.xml && echo 'yes' || echo 'no'", returnStdout: true).trim()
+            
+                            if (reportExists == 'yes') {
+                                echo "Publishing Dependency-Check results..."
+                                dependencyCheckPublisher pattern: 'reports/dependency-check-report.xml'
+                                echo "No errors in scanning"
+                            } else {
+                                echo "Skipping Dependency-Check publishing - No vulnerabilities found."
+                            }
+                        }
                     }
-               }
-           }
+                }
+        }
     }
 }
