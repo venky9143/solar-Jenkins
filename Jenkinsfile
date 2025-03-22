@@ -37,6 +37,7 @@ pipeline{
             } 
          stage("OWASP Dependency Check"){
             steps{
+                sh 'mkdir -p reports' 
                 dependencyCheck additionalArguments: 
                 '''--scan	--format ALL   --out reports	--project Workspace''',
                 nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
