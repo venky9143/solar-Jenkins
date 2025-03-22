@@ -41,6 +41,7 @@ pipeline{
                 '''--scan	--format ALL	--project	Workspace''',
                 nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
                 echo "OWASP Dependency Check completed successfully"
+                publish dependencyCheckResults:'dependency-check-report.xml' 
             }
          }
     }
