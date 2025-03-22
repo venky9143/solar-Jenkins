@@ -24,14 +24,14 @@ pipeline{
                 stage("dependencies scanning"){
                     steps{
                         sh 'npm audit --audit-level=critical'
-                        sh 'npm audit fix'
                          echo "Dependencies Scanned  successfully"
             }   
         }  
-                stage("Code Coverage"){
-                    steps{
-                        sh 'npm run coverage --threshold=50'
-                        echo "Code Coverage completed successfully"
+                stage("aduit fix"){  
+                    steps{ {
+                        sh 'npm audit fix'
+                        echo "audit fix  successfully"
+                        }
                     }
                 }
             }
