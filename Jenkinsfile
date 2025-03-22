@@ -23,14 +23,14 @@ pipeline{
             parallel{
                 stage("dependencies scanning"){
                     steps{
-                        sh 'npm audit'
+                        sh 'npm audit --audit-level=critical'
                         sh 'npm audit fix'
                          echo "Dependencies Scanned  successfully"
             }   
         }  
                 stage("Code Coverage"){
                     steps{
-                        sh 'npm run coverage'
+                        sh 'npm run coverage --threshold=50'
                         echo "Code Coverage completed successfully"
                     }
                 }
