@@ -45,34 +45,16 @@ pipeline {
             }
         }
 
-        stage("OWASP Dependency Check") {
-            steps {
-                sh 'mkdir -p reports'
-
-                dependencyCheck(
-                    additionalArguments: '--scan . --format ALL --out reports --project Workspace',
-                    nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true
-                )
-                
+       stage("OWASP Dependency Check"){
+            steps{
+                 sh 'mkdir -p reports' 
+                dependencyCheck additionalArguments: 
+                '''--scan	--format ALL	--out reports --project	Workspace''',
+                nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
                 echo "OWASP Dependency Check completed successfully"
-
-                // Check if report file has content before publishing
-                script {
-                    def reportExists = sh(script: "test -s reports/dependency-check-report.xml && echo 'yes' || echo 'no'", returnStdout: true).trim()
-                    
-                    if (reportExists == 'yes') {
-                        echo "Publishing Dependency-Check results..."
-                        dependencyCheckPublisher pattern: 'reports/dependency-check-report.xml'
-                    } else {
-                        echo "Skipping Dependency-Check publishing - No vulnerabilities found."
-                    }
-                }
-                
-                // Debugging: List reports directory content
-                sh 'ls -l reports/'
+                dependencyCheckPublisher pattern: 'reports/dependency-check-report.xml' 
+                eccho "no errors in scanning"
             }
-        }
+       }
     }
 }
-
-
