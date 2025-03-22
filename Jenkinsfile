@@ -19,12 +19,23 @@ pipeline{
                 echo "Dependencies installed successfully"
             }   
         }
-        stage("dependencies scanning"){
-            steps{
-                sh 'npm audit'
-                echo "Dependencies Scanned  successfully"
+        stage("parallel stages"){
+            parallel{
+                stage("dependencies scanning"){
+                    steps{
+                        sh 'npm audit'
+                        sh 'npm audit fix'
+                         echo "Dependencies Scanned  successfully"
             }   
         }  
+                stage("Code Coverage"){
+                    steps{
+                        sh 'npm run coverage'
+                        echo "Code Coverage completed successfully"
+                    }
+                }
+            }
+        }   
          stage("OWASP Dependency Check"){
             steps{
                 dependencyCheck additionalArguments: 
