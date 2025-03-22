@@ -42,7 +42,7 @@ pipeline{
                 '''--scan	--format ALL   --out reports	--project Workspace''',
                 nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
                 echo "OWASP Dependency Check completed successfully"
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml' 
+                dependencyCheckPublisher pattern: 'reports/dependency-check-report.xml' 
             }
          }
     }
