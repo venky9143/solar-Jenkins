@@ -13,7 +13,7 @@ pipeline{
         }
         stage("installing dependencies"){
             steps{
-                sh 'npmm install'
+                sh 'npm install'
                 echo "Dependencies installed successfully"
             }   
         }
