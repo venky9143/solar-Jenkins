@@ -38,17 +38,19 @@ pipeline{
          stage("OWASP Dependency Check"){
             steps{
                 sh 'mkdir -p reports' 
-                dependencyCheck additionalArguments: 
-                '''--scan	--format ALL   --out reports	--project Workspace''',
-                nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
+                dependencyCheck (
+		additionalArguments: '--scan	--format ALL   --out reports	--project Workspace',
+                nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true
+		)                
                 echo "OWASP Dependency Check completed successfully"
+		 sh 'ls -l reports/'
                 dependencyCheckPublisher pattern: 'reports/dependency-check-report.xml' 
             }
          }
     }
     post {
         always {
-            junit 'build/reports/**/*.xml'
+            junit 'reports/**/*.xml'
         }
     }
 }
