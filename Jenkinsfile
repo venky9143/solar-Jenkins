@@ -74,11 +74,4 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Corrected report path
-            junit 'reports/*.xml'
-        }
-    }
-}
 
