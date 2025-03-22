@@ -28,7 +28,7 @@ pipeline{
             }   
         }  
                 stage("aduit fix"){  
-                    steps{ {
+                    steps {
                         sh 'npm audit fix'
                         echo "audit fix  successfully"
                         }
