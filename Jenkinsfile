@@ -53,7 +53,7 @@ pipeline {
                 nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
                 echo "OWASP Dependency Check completed successfully"
                 dependencyCheckPublisher pattern: 'reports/dependency-check-report.xml' 
-                eccho "no errors in scanning"
+                echo "no errors in scanning"
             }
        }
     }
