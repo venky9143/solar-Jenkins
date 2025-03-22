@@ -19,6 +19,27 @@ pipeline{
                 echo "Dependencies installed successfully"
             }   
         }
+        stage("dependencies scanning"){
+            steps{
+                sh 'npm audit'
+                echo "Dependencies Scanned  successfully"
+            }   
+        }
+         stage("dependencies scanning"){
+            steps{
+                sh 'npm audit'
+                echo "Dependencies Scanned  successfully"
+            }   
+        }
+         stage("OWASP Dependency Check"){
+            steps{
+                dependencyCheck additionalArguments: 
+                '''--scan	--format ALL	--project	Workspace''',
+                nvdCredentialsId: 'OWAP-CRED', odcInstallation: '12.1.0', skipOnScmChange: true                
+                echo "OWASP Dependency Check completed successfully"
+                
+            }   
+        }
     }
 }
 
