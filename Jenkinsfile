@@ -1,5 +1,10 @@
 pipeline {
     agent any
+        environment {
+               SONARQUBE_URL = "http://34.229.134.65:9000"
+              SONARQUBE_TOKEN = credentials('SONAR-KEY')
+        }
+    
     stages {
         stage("Project working on") {
             steps {
@@ -75,5 +80,20 @@ pipeline {
                     }
                 }
         }
+
+        stage('SonarQube Analysis') {
+                steps {
+                    withSonarQubeEnv('SonarQube') {  // Ensure 'SonarQube' is the correct name in Jenkins settings
+                        sh '''
+                        sonar-scanner \
+                          -Dsonar.projectKey=Jenkins-Demo \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=$SONARQUBE_URL \
+                          -Dsonar.login=$SONARQUBE_TOKEN
+                        '''
+                    }
+                }
+        }
     }
 }
+                    
