@@ -83,7 +83,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
                 steps {
-                    withSonarQubeEnv('SonarQube') {  // Ensure "SonarQube" is the correct name in Jenkins settings
+                    withSonarQubeEnv('SonarQube') {  // Ensure "SonarQube" is the correct name in Jenkins settings !!!
                         sh '''
                          /opt/sonar-scanner/bin/sonar-scanner \
                           -Dsonar.projectKey=Jenkins-Demo \
