@@ -85,7 +85,7 @@ pipeline {
                 steps {
                     withSonarQubeEnv('SonarQube') {  // Ensure 'SonarQube' is the correct name in Jenkins settings
                         sh '''
-                        sonar-scanner \
+                         /opt/sonar-scanner/bin/sonar-scanner \
                           -Dsonar.projectKey=Jenkins-Demo \
                           -Dsonar.sources=. \
                           -Dsonar.host.url=$SONARQUBE_URL \
