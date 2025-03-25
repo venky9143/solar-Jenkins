@@ -90,20 +90,22 @@ pipeline {
                 }
             }
         stage("parallel stages"){
-            parallel{}
-            stage("Build docker image"){
-                steps{
+            parallel{
+                stage("Build docker image"){
+                    steps{
                     sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."  
                 }
             }
-            stage("Push docker image"){
-                steps{
-                    withCredentials([usernamePassword(credentialsId: 'Docker-Id', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-                        sh "echo ${DOcker-Id} | docker login -u venkateshkesa --password-stdin"
-                        sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+
+                stage("Push docker image"){
+                    steps{
+                        withCredentials([usernamePassword(credentialsId: 'Docker-Id', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                            sh "echo ${DOcker-Id} | docker login -u venkateshkesa --password-stdin"
+                            sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                        }
                     }
                 }
             }
-        }    
+        }
     }
 }
