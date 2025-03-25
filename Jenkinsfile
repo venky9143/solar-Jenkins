@@ -93,7 +93,19 @@ pipeline {
             parallel{
                 stage("Build docker image"){
                     steps{
-                    sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."  
+                    sh ''' 
+                       # Remove docker images 
+                       IMAGE_ID=$(docker images -q ${DOCKER_IMAGE}:${DOCKER_TAG})
+                       
+                       if [ -n "$IMAGE_ID"  ]; then
+                           docker rmi -f $IMAGE_ID
+                           echo "Removed the older images : "$IMAGE_ID""
+                       fi
+                       
+
+                       docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+                       echo " New image was created : "${DOCKER_IMAGE}:${DOCKER_TAG}" "
+                       '''
                 }
             }
 
