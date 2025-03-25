@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage("Project working on") {
             steps {
-                echo "Project is working on: Solar System Project"
+                echo "Project is working on:: Solar System Project"
             }
         }
 
