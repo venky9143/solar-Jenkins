@@ -90,7 +90,7 @@ pipeline {
                       -Dsonar.login=${SONAR_AUTH_TOKEN} \
                       -Dsonar.scm.provider=git \
                       -Dsonar.sourceEncoding=UTF-8 \
-                      -Dsonar.exclusions=**/app-test.js
+                      -Dsonar.exclusions=**/app-test.js,**/*.spec.js
                     '''
                 }
             }
