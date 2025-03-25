@@ -1,7 +1,8 @@
-FROM node:latest
+FROM node:18
 WORKDIR /app
-COPY packaage.*json /app
-RUN npm install
+COPY package*.json /app
+RUN ls -l /app
+RUN npm cache clean --force && npm install --legacy-peer-deps
 COPY . .
 EXPOSE  3000
 CMD [ "npm", "start" ]
