@@ -3,6 +3,7 @@ pipeline {
     environment {
         SONARQUBE_URL = "http://34.205.172.44:9000"
         SONAR_PROJECT_KEY = 'Jenkins-Demo'
+        SONARQUBE_TOKEN = credentials('SONAR-KEY')  // Ensure 'SONAR-KEY' is correct
     }
 
     stages {
