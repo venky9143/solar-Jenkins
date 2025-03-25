@@ -78,7 +78,7 @@ pipeline {
                 script {
                     def scannerHome = tool 'SonarScanner'
                 }
-                withSonarQubeEnv('SonarQube') {  // Ensure 'SonarQube' matches the configured name
+                withSonarQubeEnv('Sonarqube') {  // Ensure 'SonarQube' matches the configured name
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
