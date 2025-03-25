@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         SONARQUBE_URL = "http://34.205.172.44:9000"
-        SONAR_PROJECT_KEY = 'Jenkins-Demo'
+        SONAR_PROJECT_KEY = 'jenkins-solar-system'
         SONARQUBE_TOKEN = credentials('SONAR-KEY')  // Ensure 'SONAR-KEY' is correct
     }
 
@@ -85,7 +85,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {  
                     sh '''
                      /opt/sonar-scanner/bin/sonar-scanner \
-                      -Dsonar.projectKey=Jenkins-Demo \
+                      -Dsonar.projectKey=jenkins-solar-system \
                       -Dsonar.sources=. \
                       -Dsonar.host.url=${SONAR_HOST_URL} \
                       -Dsonar.login=${SONAR_AUTH_TOKEN} \
