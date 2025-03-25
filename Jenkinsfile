@@ -74,21 +74,12 @@ pipeline {
             }
         }
 
-             stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {  
-                    sh '''
-                     /opt/sonar-scanner/bin/sonar-scanner \
-                      -Dsonar.projectKey=jenkins-solar-system \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=${SONAR_HOST_URL} \
-                      -Dsonar.login=${SONAR_AUTH_TOKEN} \
-                      -Dsonar.scm.provider=git \
-                      -Dsonar.sourceEncoding=UTF-8 \
-                      -Dsonar.exclusions=**/app-test.js,**/*.spec.js
-                    '''
+     stage('SonarQube Analysis') {
+                def scannerHome = tool 'SonarScanner';
+                withSonarQubeEnv() {
+                  sh "${scannerHome}/bin/sonar-scanner"
                 }
-            }
-        }
+     }
     }
 }
+
