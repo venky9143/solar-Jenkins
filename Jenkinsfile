@@ -73,16 +73,16 @@ pipeline {
                 }
             }
         }
-       stage('SonarQube Analysis') {
-            steps {
-                script {
-                    def scannerHome = tool 'SonarScanner'
-                }
-                withSonarQubeEnv('Sonarqube') {  // Ensure 'SonarQube' matches the configured name
-                    sh "${scannerHome}/bin/sonar-scanner"
+        stage('SonarQube Analysis') {
+                steps {
+                    script {
+                        def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'  // Ensure name matches Jenkins tool
+                        withSonarQubeEnv('Sonarqube') {  // Ensure this matches the SonarQube installation in Jenkins
+                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=SolarSystem -Dsonar.sources=."
+                        }
+                    }
                 }
             }
-       }
     }
 }
 
