@@ -1,11 +1,5 @@
 pipeline {
     agent any
-    environment {
-        SONARQUBE_URL = "http://34.205.172.44:9000"
-        SONAR_PROJECT_KEY = 'jenkins-solar-system'
-        SONARQUBE_TOKEN = credentials('SONAR-KEY')  // Ensure 'SONAR-KEY' is correct
-    }
-
     stages {
         stage("Project working on") {
             steps {
@@ -76,23 +70,6 @@ pipeline {
                             echo "Skipping Dependency-Check publishing - No vulnerabilities found."
                         }
                     }
-                }
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {  
-                    sh '''
-                     /opt/sonar-scanner/bin/sonar-scanner \
-                      -Dsonar.projectKey=jenkins-solar-system \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=${SONAR_HOST_URL} \
-                      -Dsonar.login=${SONAR_AUTH_TOKEN} \
-                      -Dsonar.scm.provider=git \
-                      -Dsonar.sourceEncoding=UTF-8 \
-                      -Dsonar.exclusions=**/app-test.js,**/*.spec.js
-                    '''
                 }
             }
         }
