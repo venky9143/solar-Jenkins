@@ -99,8 +99,8 @@ pipeline {
 
                 stage("Push docker image"){
                     steps{
-                        withCredentials([usernamePassword(credentialsId: 'Docker-Id', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-                            sh "echo ${Docker-Id} | docker login -u venkateshkesa --password-stdin"
+                        withCredentials([usernamePassword(credentialsId: 'DOCKER-HUB', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                            sh "echo ${DOCKER-HUB} | docker login -u venkateshkesa --password-stdin"
                             sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                         }
                     }
